@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // mongoose connection
 const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/ExpressError");
-const { listingSchema } = require("./JOISchema");
+const  listingSchema  = require("./JOISchema");
 
 async function main() {
   await mongoose.connect(MONGO_URL);
@@ -34,10 +34,10 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 const validateListing = (req, res, next) => {
-  const { error } = listingSchema.validate(req.body);
-  error.details.map((el) => el.message.join(","));
+  const { error } = listingSchema.validate({listing:req.body});
   if (error) {
-    throw new ExpressError(400, result.error);
+  //  let msg = error.details.map((el) => el.message.join(","));
+    throw new ExpressError(400, error);
   } else {
     next();
   }
@@ -94,7 +94,7 @@ app.put(
     // Update fields
     listing.title = title;
     listing.description = description;
-    listing.price = price;
+    listing.price =price;
     listing.country = country;
     listing.location = location;
 

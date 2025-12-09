@@ -6,10 +6,11 @@ const listingSchema = Joi.object({
     location: Joi.string().required(),
     country: Joi.string().required(),
     price: Joi.number().required().min(0),
-    image: Joi.object({
-      filename: Joi.string().required(),
-      url: Joi.string().allow("", null),
-    }).required(),
-  }).required(),
+    // image: Joi.object({
+    //   filename: Joi.string().required(),
+    //   url: Joi.string().allow("", null),
+    // }).required(),
+    image: Joi.string().allow("", null),
+  }),
 });
 module.exports = listingSchema;
