@@ -17,7 +17,8 @@ app.use(express.static(path.join(__dirname, "public")));
 // mongoose connection
 const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/ExpressError");
-const  listingSchema  = require("./JOISchema");
+const Review = require("./models/review");
+const { listingSchema,reviewSchema } = require("./JOISchema");
 
 async function main() {
   await mongoose.connect(MONGO_URL);
@@ -34,14 +35,24 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 const validateListing = (req, res, next) => {
-  const { error } = listingSchema.validate({listing:req.body});
+  const { error } = listingSchema.validate(req.body);
   if (error) {
-  //  let msg = error.details.map((el) => el.message.join(","));
-    throw new ExpressError(400, error);
+     let msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(400, msg);
   } else {
     next();
   }
 };
+const validateReview = (req, res, next) => {
+  const { error } = reviewSchema.validate(req.body);
+  if (error) {
+     let msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(400, msg);
+  } else {
+    next();
+  }
+};
+
 // landing route
 app.get(
   "/listings",
@@ -94,7 +105,7 @@ app.put(
     // Update fields
     listing.title = title;
     listing.description = description;
-    listing.price =price;
+    listing.price = price;
     listing.country = country;
     listing.location = location;
 
@@ -117,6 +128,19 @@ app.delete(
     res.redirect("/listings");
   })
 );
+
+//Reviewss---
+//Post ROute
+app.post("/listings/:id/reviews",validateReview, wrapAsync(async (req, res) => {
+  let listing = await Listing.findById(req.params.id);
+  let newReview = new Review(req.body.review);
+  listing.reviews.push(newReview);
+  await newReview.save();
+  await listing.save();
+  console.log("new Review saved ");
+ res.redirect(`/listings/${listing._id}`);
+}));
+
 // TODO -- Catch-all 404
 app.all("/*splat", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!"));
