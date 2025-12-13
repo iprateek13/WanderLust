@@ -3,7 +3,7 @@ const app = express();
 const port = 3000;
 const mongoose = require("mongoose");
 const MONGO_URL = "mongodb://127.0.0.1:27017/EzHomes";
-const Listing = require("./models/listings");
+// const Listing = require("./models/listings");
 const path = require("path");
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -14,15 +14,24 @@ app.use(methodOverride("_method"));
 const ejsMate = require("ejs-mate");
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
-// mongoose connection
-const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/ExpressError");
-const Review = require("./models/review");
-const { listingSchema, reviewSchema } = require("./JOISchema");
+// const wrapAsync = require("./utils/wrapAsync");
+// const Review = require("./models/review");
+// const { listingSchema, reviewSchema } = require("./JOISchema");
+const session = require("express-session");
 
-const listings=require("./routes/listing");
+const sessionOptions = {
+   name: "mySessionId",
+  secret: "mysupersecretcode",
+  resave: false,
+  saveUninitialized: true,
+};
+app.use(session(sessionOptions));
+
+const listings = require("./routes/listing");
 const review = require("./routes/review");
 
+// mongoose connection
 async function main() {
   await mongoose.connect(MONGO_URL);
 }
@@ -38,25 +47,11 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*routing of listing router using express router*/
-app.use("/listings",listings)
+app.use("/listings", listings);
 
 /*routing of  router using express router*/
-app.use("/listings/:id/reviews",review);
+app.use("/listings/:id/reviews", review);
 
 // TODO -- Catch-all 404
 app.all("/*splat", (req, res, next) => {
