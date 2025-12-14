@@ -30,12 +30,13 @@ router.get("/new", (req, res) => {
 
 // CREATE ROUTE
 router.post(
-  "",
+  "/",
   validateListing,
   wrapAsync(async (req, res) => {
-     const listing = new Listing(req.body.listing);
+    const listing = new Listing(req.body.listing);
     await listing.save();
-    res.redirect("/listings");   
+    req.flash("success", "New Listing created");
+    res.redirect("/listings");
   })
 );
 
@@ -45,6 +46,10 @@ router.get(
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const listing = await Listing.findById(id).populate("reviews");
+    if (!listing) {
+      req.flash("error", "Listing that you are requested does not exist");
+      return res.redirect("/listings");
+    }
     res.render("listing/show.ejs", { listing });
   })
 );
@@ -54,6 +59,10 @@ router.get(
   "/:id/edit",
   wrapAsync(async (req, res) => {
     const listing = await Listing.findById(req.params.id);
+    if (!listing) {
+      req.flash("error", "Listing that you are requested does not exist");
+      return res.redirect("/listings");
+    }
     res.render("listing/edit.ejs", { listing });
   })
 );
@@ -63,7 +72,6 @@ router.put(
   "/:id",
   validateListing,
   wrapAsync(async (req, res) => {
-
     if (!req.body.listing) {
       throw new ExpressError(400, "Send valid data for listing");
     }
@@ -71,25 +79,23 @@ router.put(
     const { id } = req.params;
 
     // Directly update using req.body.listing
-    const listing = await Listing.findByIdAndUpdate(
-      id,
-      req.body.listing,
-      { new: true, runValidators: true }
-    );
-
+    const listing = await Listing.findByIdAndUpdate(id, req.body.listing, {
+      new: true,
+      runValidators: true,
+    });
+    req.flash("success", "Review updated");
     res.redirect(`/listings/${id}`);
   })
 );
-
 
 // DELETE ROUTE
 router.delete(
   "/:id",
   wrapAsync(async (req, res) => {
     await Listing.findByIdAndDelete(req.params.id);
-    res.redirect("/listings");   
+    req.flash("success", "Listing Deleted");
+    res.redirect("/listings");
   })
 );
-
 
 module.exports = router;
