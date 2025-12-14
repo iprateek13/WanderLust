@@ -18,23 +18,10 @@ const ExpressError = require("./utils/ExpressError");
 // const wrapAsync = require("./utils/wrapAsync");
 // const Review = require("./models/review");
 // const { listingSchema, reviewSchema } = require("./JOISchema");
+const flash = require("connect-flash");
 const session = require("express-session");
-
-const sessionOptions = {
-  name: "mySessionId",
-  secret: "mysupersecretcode",
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    httpOnly:true,
-  },
-};
-app.use(session(sessionOptions));
-
-const listings = require("./routes/listing");
 const review = require("./routes/review");
+const listings = require("./routes/listing");
 
 // mongoose connection
 async function main() {
@@ -47,10 +34,32 @@ main()
   .catch((err) => {
     console.log(err);
   });
-// Root route
+
+const sessionOptions = {
+  name: "mySessionId",
+  secret: "mysupersecretcode",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+  },
+};
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
+
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
+
+// Root route
 
 /*routing of listing router using express router*/
 app.use("/listings", listings);
