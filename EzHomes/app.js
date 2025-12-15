@@ -22,9 +22,7 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const review = require("./routes/review");
 const listings = require("./routes/listing");
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
-const User = require("./models/user");
+const review = require("./routes/review");
 
 // mongoose connection
 async function main() {
@@ -52,25 +50,6 @@ const sessionOptions = {
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-
-app.use(session(sessionOptions));
-app.use(flash());
-
-app.use(passport.initialize());
-app.use(passport.session());
-// use static authenticate method of model in LocalStrategy
-passport.use(new LocalStrategy(User.authenticate()));
-// use static serialize and deserialize of model for passport session support
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-app.use((req, res, next) => {
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
-  next();
-});
-
-// Root route
 
 /*routing of listing router using express router*/
 app.use("/listings", listings);
