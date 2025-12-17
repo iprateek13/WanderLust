@@ -1,5 +1,6 @@
 const Listing = require("./models/listings");
-const { listingSchema,reviewSchema } = require("./JOISchema");
+const Review = require("./models/review");
+const { listingSchema, reviewSchema } = require("./JOISchema");
 const ExpressError = require("./utils/ExpressError");
 
 module.exports.isLoggedIn = (req, res, next) => {
@@ -22,6 +23,15 @@ module.exports.isOwner = async (req, res, next) => {
   let { id } = req.params;
   let listing = await Listing.findById(id);
   if (!listing.owner._id.equals(res.locals.currUser._id)) {
+    req.flash("error", "You are not authorized to perform this action");
+    return res.redirect(`/listings/${id}`);
+  }
+  next();
+};
+module.exports.isReviewAuthor = async (req, res, next) => {
+  let { id, reviewId } = req.params;
+  let listing = await Listing.findById(reviewId);
+  if (!review.author.equals(res.locals.currUser._id)) {
     req.flash("error", "You are not authorized to perform this action");
     return res.redirect(`/listings/${id}`);
   }

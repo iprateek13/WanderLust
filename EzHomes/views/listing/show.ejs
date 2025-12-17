@@ -46,8 +46,8 @@
 
   <!-- Review Form -->
   <div class="col-8 offset-3 mb-3">
+    <% if (currUser) { %>
     <h4>Leave a Review</h4>
-
     <form
       action="/listings/<%= listing._id %>/reviews"
       method="post"
@@ -81,8 +81,8 @@
       </div>
       <button class="btn btn-outline-dark rounded-pill px-4">Submit</button>
     </form>
-
     <hr />
+    <% } %>
 
     <!-- All Reviews Section -->
     <div class="mb-4">
@@ -95,7 +95,8 @@
             <div class="card-body">
               <!-- Reviewer -->
               <h6 class="card-title fw-semibold mb-1">
-                <i class="fa-solid fa-user me-1"></i> John Doe
+                <i class="fa-solid fa-user-circle text-primary me-1 fs-5"></i>
+                <span><%= review.author.username %></span>
               </h6>
 
               <!-- Comment -->
