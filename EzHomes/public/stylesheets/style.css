@@ -7,6 +7,8 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
+
 .container {
   flex: 1;
 }
@@ -78,6 +80,7 @@ body {
 .card-text p {
   font-weight: 400 !important;
 }
+
 .listing-links {
   text-decoration: none !important;
 }
@@ -117,4 +120,96 @@ footer {
   object-position: center;
   image-orientation: from-image; /* handle EXIF orientation */
   border-radius: 8px;
+}
+.footer {
+  background-color: #c6c6c6;
+  padding: 6px 0;       /* 👈 height control */
+  border-top: 1px solid  #dee2e6;
+  font-size: 0.9rem;
+}
+
+.f-info {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.f-info-socials i {
+  font-size: 1.2rem;
+  margin-right: 12px;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.2s ease;
+}
+
+.f-info-socials i:hover {
+  color: #0d6efd; /* Bootstrap blue */
+}
+
+.f-info-brand {
+  color: #555;
+}
+
+.f-info-links a {
+  margin-left: 12px;
+  text-decoration: none;
+  color: #555;
+  transition: color 0.2s ease;
+}
+
+.f-info-links a:hover {
+  color: #0d6efd;
+}
+
+
+.navbar {
+  height: 64px; /* compact height */
+}
+
+.navbar-brand span {
+  letter-spacing: 0.5px;
+}
+
+.nav-link {
+  color: #333;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #dc3545; /* Airbnb red */
+}
+
+.navbar-nav .btn {
+  border-radius: 20px;
+}
+/*  now*/
+
+.navbar .nav-link {
+  position: relative;
+  padding: 6px 10px;
+  color: #333;
+}
+
+.navbar .nav-link:hover {
+  color: #000;
+}
+
+.navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: #dc3545; /* red accent */
+  transition: width 0.3s ease;
+}
+
+.navbar .nav-link:hover::after,
+.navbar .nav-link.active::after {
+  width: 100%;
 }

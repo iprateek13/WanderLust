@@ -1,6 +1,14 @@
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/"><i class="fa-brands fa-airbnb"></i></a>
+<nav
+  class="navbar navbar-expand-md navbar-light bg-white border-bottom sticky-top shadow-sm"
+>
+  <div class="container-fluid px-4">
+    <!-- Brand -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+      <i class="fa-brands fa-airbnb text-danger fs-5"></i>
+      <span class="fw-bold fs-5">Wanderlust</span>
+    </a>
+
+    <!-- Toggler -->
     <button
       class="navbar-toggler"
       type="button"
@@ -12,18 +20,30 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <!-- Nav Links -->
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="/">Home</a>
-        <a class="nav-link" href="/listings">Listings</a>
-        <a class="nav-link" href="/listings/new">AddList</a>
+      <!-- Left -->
+      <div class="navbar-nav ms-3 d-flex align-items-center gap-3">
+        <a class="nav-link fw-medium" href="/">Home</a>
+        <a class="nav-link fw-medium" href="/listings">Listings</a>
+        <a class="nav-link fw-semibold" href="/listings/new">Add Listing</a>
       </div>
-      <div class="navbar-nav ms-auto">
+
+      <!-- Right -->
+      <div class="navbar-nav ms-auto gap-2 align-items-center">
         <% if (!currUser) { %>
-        <a class="nav-link active" aria-current="page" href="/signup">Signup</a>
-        <a class="nav-link" href="/login">Login</a>
+        <a class="btn btn-outline-dark btn-sm rounded-pill px-4" href="/signup">
+          Signup
+        </a>
+
+        <a class="btn btn-dark btn-sm rounded-pill px-4" href="/login">
+          Login
+        </a>
         <% } %> <% if (currUser) { %>
-        <a class="nav-link" href="/logout">Logout</a>
+        <a class="btn btn-dark btn-sm rounded-pill px-4" href="/logout">
+          Logout
+        </a>
         <% } %>
       </div>
     </div>

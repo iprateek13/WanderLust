@@ -1,31 +1,44 @@
 <% layout("layouts/boilerplate") %>
 
+<h3 class="mb-4">All Listings</h3>
 
-<h3>All listings</h3>
-
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
   <% for (let listing of allListing) { %>
-  <div class="col">
-    <a href="/listings/<%= listing._id %>" class="listing-links">
-      <div class="card position-relative listing-card">
-        <img
-          src="<%= listing.image.url %>"
-          class="card-img-top"
-          alt="listing-image"
-          style="height: 20rem; object-fit: cover"
-        />
-        <div class="card-img-overlay">Cards</div>
-        <div class="card-body">
-          <p class="card-text">
-            <b><%= listing.title %></b> <br />
-            &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
-          </p>
+    <div class="col">
+      <a href="/listings/<%= listing._id %>" class="listing-links text-decoration-none">
+        <div class="card position-relative listing-card h-100 shadow-sm">
+
+          <!-- Image -->
+          <img
+            src="<%= listing.image.url %>"
+            class="card-img-top"
+            alt="listing-image"
+            style="height: 20rem; object-fit: cover"
+          />
+
+          <!-- Optional overlay -->
+          <div class="card-img-overlay p-2"></div>
+
+          <!-- Text Content -->
+          <div class="card-body">
+            <!-- Title -->
+            <h6 class="mb-1 fw-semibold text-dark">
+              <%= listing.title %>
+            </h6>
+
+            <!-- Price -->
+            <p class="mb-0 text-success fw-bold fs-5">
+              ₹ <%= listing.price.toLocaleString("en-IN") %>
+              <span class="text-muted fw-normal fs-6">/ night</span>
+            </p>
+          </div>
+
         </div>
-      </div>
-    </a>
-  </div>
+      </a>
+    </div>
   <% } %>
 </div>
+
 
 <!-- <form action="/listings/new" method="get">
   <button>Add New list</button>
