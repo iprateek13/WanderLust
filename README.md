@@ -1,63 +1,75 @@
+# Wanderlust – Full Stack Listing Application
+
+Wanderlust is a full-stack web application inspired by Airbnb-style listings, built using Node.js, Express, MongoDB, and EJS.  
+The project follows RESTful architecture and the MVC design pattern, focusing on strong backend fundamentals and server-side rendering.
 
 ---
 
-## ⚙️ Features Implemented
+## Features Implemented
 
-✅ **CRUD Operations**  
+### CRUD Operations
 - Create new listings  
 - View all listings  
+- View listing details  
 - Edit existing listings  
 - Delete listings  
 
-✅ **EJS Partials & Layouts**  
-- Reusable templates using `includes/` folder  
-- Cleaner structure with DRY principle  
+### EJS Partials & Layouts
+- Reusable templates using the `includes/` folder  
+- Cleaner structure following the DRY principle  
 
-✅ **Dynamic Routing**  
-- URL-based routing: `/listings/:id`, `/listings/new`, etc.
+### Dynamic Routing
+- URL-based routing such as:
+  - `/listings`
+  - `/listings/:id`
+  - `/listings/new`
 
-✅ **MongoDB Integration**  
-- Listings stored & retrieved dynamically via Mongoose
+### MongoDB Integration
+- Listings stored and retrieved dynamically using Mongoose  
 
-✅ **RESTful APIs**  
-- Follows REST principles for CRUD (GET, POST, PUT, DELETE)
+### RESTful APIs
+- Proper use of HTTP methods (GET, POST, PUT, DELETE)
 
-✅ **Form Handling**  
-- HTML forms with method override for PUT/DELETE requests
+### Form Handling
+- HTML forms  
+- Method Override for PUT and DELETE requests  
 
 ---
 
-## 🧩 Example Routes
+## Example Routes
 
-| Route | HTTP Method | Description |
-|--------|--------------|--------------|
+| Route | Method | Description |
+|------|--------|-------------|
 | `/listings` | GET | Show all listings |
-| `/listings/new` | GET | Show form to create new listing |
-| `/listings` | POST | Create new listing |
-| `/listings/:id` | GET | Show details of a listing |
-| `/listings/:id/edit` | GET | Edit a listing |
-| `/listings/:id` | PUT | Update a listing |
-| `/listings/:id` | DELETE | Delete a listing |
+| `/listings/new` | GET | Form to create a new listing |
+| `/listings` | POST | Create a new listing |
+| `/listings/:id` | GET | Show listing details |
+| `/listings/:id/edit` | GET | Edit listing form |
+| `/listings/:id` | PUT | Update listing |
+| `/listings/:id` | DELETE | Delete listing |
 
 ---
 
-## 🧠 Concepts Used (React & Deployment excluded)
+## Concepts Used
+(React and frontend frameworks excluded)
 
-- **MVC pattern** (Model–View–Controller)  
-- **EJS templating** with partials  
-- **Routing & REST architecture**  
-- **MongoDB CRUD via Mongoose**  
-- **Async/Await for DB operations**  
-- **Environment variables using `.env`**  
-- **Middleware concepts** (methodOverride, express.urlencoded, static files)  
-- **Server-Side Rendering (SSR)**  
-- **Error handling with try-catch & async functions**  
+- MVC Architecture (Model–View–Controller)  
+- EJS templating with partials  
+- RESTful routing  
+- MongoDB CRUD using Mongoose  
+- Async/Await  
+- Environment variables using `.env`  
+- Express middleware:
+  - method-override  
+  - express.urlencoded  
+  - static file handling  
+- Server-side rendering (SSR)  
+- Error handling using try-catch  
 
 ---
 
-## 🛠️ How to Run Locally
+## How to Run Locally
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/EzHomes.git
-   cd EzHomes
+### Clone the repository
+```bash
+git clone https://github.com/yourusername/Wanderlust.git
